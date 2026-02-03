@@ -1,0 +1,14 @@
+{
+  "name": "hotel-booking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+     "backend": "npm start --prefix server",
+    "frontend": "npm start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
