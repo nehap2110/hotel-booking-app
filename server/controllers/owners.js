@@ -48,14 +48,21 @@ exports.ownerEarnings = async (req, res) => {
 exports.ownerBookings = async (req, res) => {
   try {
     const hotels = await Hotel.find({ postedBy: req.user._id }).select("_id");
+    if (!hotels.length) {
+     return res.json([]);
+    }
+
     const hotelIds = hotels.map(h => h._id);
 
-    const bookings = await Booking.find({
-      hotel: { $in: hotelIds }
-    })
-      .populate("hotel", "title")
-      .populate("bookedBy", "name email")
-      .sort({ createdAt: -1 });
+    
+const bookings = await Booking.find({
+  hotel: { $in: hotelIds }
+})
+.select("from to beds amount status createdAt")
+.populate("hotel", "title")
+.populate("bookedBy", "name email")
+.sort({ createdAt: -1 });
+
 
     res.json(bookings);
 
